@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/14 02:13:41 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/17 21:12:55 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,14 @@ int	int_range(char *num)
 	return (1);
 }
 
-int		num_duplicated(char **argv, char *num, int argc, int l)
+int		num_duplicated(char **argv, int l)
 {
-	char	**arr;
-	int		i;
 	int		j;
 
-	arr = (char **)malloc(sizeof(char) * argc);
-	i = 0;
-	j = 1;
-	while (arr[i])
-	{
-		arr[i++] = ft_strdup(argv[j]);
-		printf("%s\n", arr[i]);
-	}
 	j = 0;
 	while (j < l)
 	{
-		if (!ft_strncmp(argv[j], num, ft_strlen(num)))
+		if (!ft_strncmp(argv[j], argv[l], ft_strlen(argv[l])))
 			return (0);
 		j++;
 	}
@@ -67,26 +57,46 @@ int		num_duplicated(char **argv, char *num, int argc, int l)
 void    check_error(char **argv, int argc)
 {
 	int		i;
+	int		j;
+	char	**arr;
 
 	i = 1;
-	(void)argc;
+	j = 0;
+	arr = (char **)malloc(sizeof(char *) * argc);
 	while (argv[i])
 	{
-		// printf("%s\n", argv[i]);
-		if (!int_range(argv[i]) || num_duplicated(argv, argv[i], argc, i))
+		arr[j] = ft_strdup(argv[i]);
+		i++;
+	}
+	arr[j] = NULL;
+	i = 1;
+	while (argv[i])
+	{
+		if (!int_range(argv[i]) || !num_duplicated(argv, i))
 		{
 			write (2, "errooor!\n", 8);
 			exit (1);
-		}
+		} 
 		i++;
 	}
 }
 
 int main(int argc, char **argv)
 {
+	t_listt	*list = NULL;
+	int		i;
+
 	if (argc >= 3)
 	{
+		i = 1;
 		check_error(argv, argc);
+		while (list->next)
+		{
+			list->data = ft_atoi(argv[i]);
+			printf("=====%d\n", list->data);
+			list->next->data = ft_atoi(argv[i + 1]);
+			i++;
+		}
 	}
 	else
 	{
