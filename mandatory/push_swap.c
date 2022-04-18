@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/17 21:12:55 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/18 03:24:43 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,30 @@ void    check_error(char **argv, int argc)
 
 int main(int argc, char **argv)
 {
-	t_listt	*list = NULL;
+	t_list	*list = NULL;
 	int		i;
 
 	if (argc >= 3)
 	{
 		i = 1;
 		check_error(argv, argc);
-		while (list->next)
+		// while (list->next)
+		// {
+		// 	list->data = ft_atoi(argv[i]);
+		// 	printf("=====%d\n", list->data);
+		// 	list->next->data = ft_atoi(argv[i + 1]);
+		// 	i++;
+		// }
+		// list = malloc(sizeof(t_list) * argc);
+		while (argv[i])
 		{
-			list->data = ft_atoi(argv[i]);
-			printf("=====%d\n", list->data);
-			list->next->data = ft_atoi(argv[i + 1]);
+			ft_lstadd_back(&list, ft_lstnew(ft_atoi(argv[i])));
 			i++;
+		}
+		while (list)
+		{
+			printf("=====%d\n", (int)list->content);
+			list = list->next;
 		}
 	}
 	else

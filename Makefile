@@ -6,7 +6,7 @@
 #    By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/14 16:41:34 by iouardi           #+#    #+#              #
-#    Updated: 2022/04/16 00:16:26 by iouardi          ###   ########.fr        #
+#    Updated: 2022/04/17 22:31:01 by iouardi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ NAME= 			push_swap
 FLAGS=			-Wall -Werror -Wextra
 CC=				cc
 SRC_FILES=		mandatory/push_swap.c
-				# mandatory/find_path.c \
-				# mandatory/execute_cmds.c
+
 # SRC_FILES_BONUS = bonus/pipex_bonus.c \
 # 				bonus/find_path_bonus.c \
 # 				bonus/get_next_line.c \

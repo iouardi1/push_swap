@@ -6,13 +6,13 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 02:12:19 by iouardi           #+#    #+#             */
-/*   Updated: 2021/11/18 04:33:00 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/18 03:15:58 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(int content)
 {
 	t_list	*arr;
 

@@ -36,6 +36,15 @@ SRC_FILES = ft_isalnum.c \
 			ft_strmapi.c \
 			ft_split.c \
 			ft_striteri.c \
+			ft_lstnew_bonus.c \
+			ft_lstadd_front_bonus.c \
+			ft_lstlast_bonus.c \
+			ft_lstadd_back_bonus.c \
+			ft_lstlast_bonus.c \
+			ft_lstsize_bonus.c \
+			ft_lstdelone_bonus.c \
+			ft_lstclear_bonus.c \
+			ft_lstiter_bonus.c
 
 SRC_FILES_BONUS = ft_lstnew_bonus.c \
 				ft_lstadd_front_bonus.c \
@@ -66,6 +75,6 @@ fclean: clean
 
 re: fclean all
 
-Bonus:  $(OBJ_FILES_BONUS)
+bonus:  $(OBJ_FILES_BONUS)
 	ar rcs $(NAME) $(OBJ_FILES_BONUS) 
 
