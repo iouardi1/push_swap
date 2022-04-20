@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/18 03:24:43 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/20 06:39:38 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,33 +81,91 @@ void    check_error(char **argv, int argc)
 	}
 }
 
+void	swap(t_list *list)
+{
+	int		tmp;
+
+	if (ft_lstsize(list) <= 1)
+		return;
+	tmp = list->content;
+	list->content = list->next->content;
+	list->next->content = tmp;
+}
+
+void	push(t_list **lista, t_list **listb)
+{
+	t_list	*new_list;
+
+	if (!lista)
+		return;
+	ft_lstadd_front(listb, ft_lstnew((*lista)->content));
+	new_list = *lista;
+	(*lista) = (*lista)->next;
+	ft_lstdelone(new_list, NULL);
+}
+
+void	rotate(t_list **lista)
+{
+	t_list	*temp;
+
+	temp = (*lista)->next;
+	ft_lstadd_back(&(*lista), ft_lstnew((*lista)->content));
+	ft_lstdelone((*lista), NULL);
+	(*lista) = temp;
+}
+
+void	reverse_rotate(t_list **lista)
+{
+	t_list	*temp;
+
+
+	temp = (*lista);
+	while ((*lista)->next)
+		*lista = (*lista)->next;
+	ft_lstadd_front(lista, ft_lstnew((*lista)->content));
+	ft_lstdelone((*lista), NULL);
+	(*lista) = temp;
+	// printf("------%d\n", (temp1)->next->content);
+}
+
 int main(int argc, char **argv)
 {
-	t_list	*list = NULL;
+	t_list	*lista = NULL;
+	t_list	*listb = NULL;
+	t_list	*temp1;
+	t_list	*temp2;
 	int		i;
 
 	if (argc >= 3)
 	{
 		i = 1;
 		check_error(argv, argc);
-		// while (list->next)
-		// {
-		// 	list->data = ft_atoi(argv[i]);
-		// 	printf("=====%d\n", list->data);
-		// 	list->next->data = ft_atoi(argv[i + 1]);
-		// 	i++;
-		// }
-		// list = malloc(sizeof(t_list) * argc);
 		while (argv[i])
 		{
-			ft_lstadd_back(&list, ft_lstnew(ft_atoi(argv[i])));
+			ft_lstadd_back(&lista, ft_lstnew(ft_atoi(argv[i])));
 			i++;
 		}
-		while (list)
+		temp2 = listb;
+		// swap_a(lista);
+		// push(&lista, &listb);
+		// printf("------%d\n", listb->content);
+		temp1 = lista;
+		// while (temp1)
+		// {
+		// 	printf("=====%d\n", (int)temp1->content);
+		// 	temp1 = temp1->next;
+		// }
+		// puts("\n\n");
+		// push(&listb, &lista);
+		reverse_rotate(&lista);
+		temp1 = lista;
+		while (temp1)
 		{
-			printf("=====%d\n", (int)list->content);
-			list = list->next;
+			printf("++++++%d\n", (int)temp1->content);
+			temp1 = temp1->next;
 		}
+		// if (listb)
+		// 	printf("------%d\n", listb->content);
 	}
 	else
 	{
