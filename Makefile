@@ -40,14 +40,14 @@ clean:
 	find . -name "*.a" -delete
 
 fclean: clean
-	rm -f $(NAME) outfile
+	rm -f $(NAME)
 
 re: fclean all
 
 bonus: $(OBJ_FILES_BONUS)
 	@make -C mandatory/libft
 	@cp mandatory/libft/libft.a ./
-	$(CC) $(FLAGS) $(OBJ_FILES_BONUS) -o $(NAME) libft.a -fsanitize=address -g
+	$(CC) $(FLAGS) $(OBJ_FILES_BONUS) -o $(NAME) libft.a -g
 
 .PHONY:
 	all clean fclean re bonus

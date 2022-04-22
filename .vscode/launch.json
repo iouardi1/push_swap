@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb-mi",
+            "request": "launch",
+            "name": "Debug",
+            "target": "/Users/iouardi/Desktop/push_swap/push_swap",
+            "args": [
+                "11",
+                "5",
+                "9"
+            ],
+            "cwd": "/Users/iouardi/Desktop/push_swap"
+        },
+    ]
+}

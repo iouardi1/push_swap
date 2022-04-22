@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/20 06:39:38 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/22 06:25:11 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	int_range(char *num)
 	return (1);
 }
 
-int		num_duplicated(char **argv, int l)
+int	num_duplicated(char **argv, int l)
 {
 	int		j;
 
@@ -54,7 +54,7 @@ int		num_duplicated(char **argv, int l)
 	return (1);
 }
 
-void    check_error(char **argv, int argc)
+void	check_error(char **argv, int argc)
 {
 	int		i;
 	int		j;
@@ -76,7 +76,7 @@ void    check_error(char **argv, int argc)
 		{
 			write (2, "errooor!\n", 8);
 			exit (1);
-		} 
+		}
 		i++;
 	}
 }
@@ -86,7 +86,7 @@ void	swap(t_list *list)
 	int		tmp;
 
 	if (ft_lstsize(list) <= 1)
-		return;
+		return ;
 	tmp = list->content;
 	list->content = list->next->content;
 	list->next->content = tmp;
@@ -109,7 +109,7 @@ void	rotate(t_list **lista)
 	t_list	*temp;
 
 	temp = (*lista)->next;
-	ft_lstadd_back(&(*lista), ft_lstnew((*lista)->content));
+	ft_lstadd_back(lista, ft_lstnew((*lista)->content));
 	ft_lstdelone((*lista), NULL);
 	(*lista) = temp;
 }
@@ -117,15 +117,21 @@ void	rotate(t_list **lista)
 void	reverse_rotate(t_list **lista)
 {
 	t_list	*temp;
-
+	t_list	*temp1;
 
 	temp = (*lista);
-	while ((*lista)->next)
-		*lista = (*lista)->next;
-	ft_lstadd_front(lista, ft_lstnew((*lista)->content));
-	ft_lstdelone((*lista), NULL);
-	(*lista) = temp;
-	// printf("------%d\n", (temp1)->next->content);
+	temp1 = NULL;
+
+	if (*lista == NULL || (*lista)->next == NULL)
+		return ;
+	while (temp->next != NULL)
+	{
+		temp1 = temp;
+		temp = temp->next;
+	}
+	temp1->next = NULL;
+	temp->next = *lista;
+	*lista = temp;
 }
 
 int main(int argc, char **argv)
@@ -170,7 +176,7 @@ int main(int argc, char **argv)
 	else
 	{
 		write (2, "error!\n", 8);
-		exit (1);
+		exit (1); 
 	}
 	return (0);
 }
