@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 09:49:07 by iouardi           #+#    #+#             */
-/*   Updated: 2021/11/18 02:08:25 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/23 21:10:26 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,5 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 		j++;
 	}
-	if (i >= n)
-		return (0);
-	else
-		return (ptr1[i] - ptr2[j]);
+	return (ptr1[i] - ptr2[j]);
 }
