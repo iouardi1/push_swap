@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:26:14 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/24 02:52:38 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/24 23:53:24 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@
 # include "libft/libft.h"
 
 typedef struct  s_struct{
-    int     moyenne;
+	int     moyenne;
+	int		beggy;
+	int		smally;
+	t_list	*lista;
+	t_list	*listb;
+	int		instruc_num;
 }   t_struct;
 
 t_list	*ft_lstlast(t_list *lst);

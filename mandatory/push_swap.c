@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/24 03:09:19 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/25 00:40:40 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,10 @@ void	reverse_rotate(t_list **lista)
 	*lista = temp;
 }
 
-int	calcul_moyenne(t_struct	*strr, t_list **lista)
+void	calcul_moyenne(t_struct	*strr, t_list **lista)
 {
 	int		i;
 
-	// moyenne = 0;
 	i = 0;
 	while (*lista)
 	{
@@ -151,38 +150,104 @@ int	calcul_moyenne(t_struct	*strr, t_list **lista)
 		i++;
 	}
 	strr->moyenne /= i;
-	return (strr->moyenne);
+}
+
+void	biggest_num(t_struct *strr, t_list **list)
+{
+	strr->beggy = strr->moyenne;
+	while ((*list))
+	{
+		if ((*list)->content >= strr->beggy)
+			strr->beggy = (*list)->content;
+		*list = (*list)->next;
+	}
+}
+
+void	smallest_num(t_struct *strr, t_list **list)
+{
+	strr->smally = strr->moyenne;
+	while ((*list))
+	{
+		if ((*list)->content <= strr->smally)
+			strr->smally = (*list)->content;
+		*list = (*list)->next;
+	}
+}
+
+void	move_to_stack_b(t_struct *strr)
+{
+	// printf("beggy---%d\n", strr->beggy);
+	t_list	*tmp;
+
+	tmp = strr->lista;
+	while (tmp)
+	{
+		if ((tmp)->content != strr->beggy && (tmp)->content != strr->smally)
+		{
+			push(&tmp, &strr->listb);
+			strr->instruc_num++;
+		}
+		tmp = (tmp)->next;
+	}
 }
 
 int main(int argc, char **argv)
 {
-	t_list	*lista = NULL;
-	t_list	*listb = NULL;
+	t_struct	*strr = malloc(sizeof(t_struct));
 	t_list	*temp1;
 	t_list	*temp2;
-	t_struct	*strr = NULL;
 	int		i;
 
+	strr->lista = NULL;
+	strr->listb = NULL;
 	strr->moyenne = 0;
+	strr->beggy = 0;
+	strr->smally = 0;
+	strr->instruc_num = 0;
 	if (argc >= 3)
 	{
 		i = 1;
 		check_error(argv, argc);
 		while (argv[i])
 		{
-			ft_lstadd_back(&lista, ft_lstnew(ft_atoi(argv[i])));
+			ft_lstadd_back(&strr->lista, ft_lstnew(ft_atoi(argv[i])));
 			i++;
 		}
-		printf("%d=====\n", lista->content);
-		temp2 = listb;
-		temp1 = lista;
-		strr->moyenne = calcul_moyenne(strr, &lista);
-		temp1 = lista;
-		// swap_a(lista);
-		// push(&lista, &listb);
-		// push(&listb, &lista);
-		// reverse_rotate(&lista);
-		temp1 = lista;
+		// printf("%d=====\n", strr->lista->content);
+		temp2 = strr->listb;
+		temp1 = strr->lista;
+		calcul_moyenne(strr, &temp1);
+		printf("moyenne:%d\n", strr->moyenne);
+		temp1 = strr->lista;
+		biggest_num(strr, &temp1);
+		printf("beggy:%d\n", strr->beggy);
+		temp1 = strr->lista;
+		smallest_num(strr, &temp1);
+		printf("smally:%d\n", strr->smally);
+		temp1 = strr->lista;
+		while (temp1)
+		{
+			printf("++++++%d\n", temp1->content);
+			temp1 = temp1->next;
+		}
+		temp1 = strr->lista;
+		move_to_stack_b(strr);
+		// while (temp1)
+		// {
+		// 	printf("-----%d\n", temp1->content);
+		// 	temp1 = temp1->next;
+		// }
+		while (strr->listb)
+		{
+			printf("-----%d\n", strr->listb->content);
+			strr->listb = strr->listb->next;
+		}
+		temp1 = strr->lista;
+		// swap_a(strr->lista);
+		// push(&strr->lista, &strr->listb);
+		// push(&strr->listb, &strr->lista);
+		// reverse_rotate(&strr->lista);
+		temp1 = strr->lista;
 		
 	}
 	else
