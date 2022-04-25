@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 18:35:58 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/18 03:19:14 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/25 04:58:06 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 typedef struct s_list
 {
 	int				content;
-	struct s_list	*next;
+	int				index;
+	int				num_of_instru;
+	struct	s_list	*next;
 }	t_list;
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstnew(int content);

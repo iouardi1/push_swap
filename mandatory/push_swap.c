@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/25 00:40:40 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/25 04:59:41 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,27 +176,56 @@ void	smallest_num(t_struct *strr, t_list **list)
 
 void	move_to_stack_b(t_struct *strr)
 {
-	// printf("beggy---%d\n", strr->beggy);
 	t_list	*tmp;
 
 	tmp = strr->lista;
-	while (tmp)
+	while (ft_lstsize(strr->lista) > 2)
 	{
-		if ((tmp)->content != strr->beggy && (tmp)->content != strr->smally)
+		if (strr->lista->content != strr->beggy && strr->lista->content != strr->smally)
 		{
-			push(&tmp, &strr->listb);
+			push(&strr->lista, &strr->listb);
 			strr->instruc_num++;
 		}
-		tmp = (tmp)->next;
+		else
+		{
+			rotate(&strr->lista);
+			strr->instruc_num++;
+		}
 	}
+}
+
+void	sort_first_two(t_struct *strr)
+{
+	if (strr->lista->content == strr->beggy)
+	{
+		rotate(&strr->lista);
+		strr->instruc_num++;
+	}
+}
+
+void	indexing_stuck(t_list **list)
+{
+	(*list)->index = 0;
+	while ((*list))
+	{
+		(*list)->index++;
+		(*list) = (*list)->next;
+	}
+}
+
+void	calculating_instruc(t_struct *strr)
+{
+	indexing_stuck(&strr->listb);
+	strr->listb->num_of_instru = 0;
+	while (*)
 }
 
 int main(int argc, char **argv)
 {
 	t_struct	*strr = malloc(sizeof(t_struct));
-	t_list	*temp1;
-	t_list	*temp2;
-	int		i;
+	t_list		*temp1;
+	t_list		*temp2;
+	int			i;
 
 	strr->lista = NULL;
 	strr->listb = NULL;
@@ -232,15 +261,16 @@ int main(int argc, char **argv)
 		}
 		temp1 = strr->lista;
 		move_to_stack_b(strr);
+		sort_first_two(strr);
 		// while (temp1)
 		// {
 		// 	printf("-----%d\n", temp1->content);
 		// 	temp1 = temp1->next;
 		// }
-		while (strr->listb)
+		while (strr->lista)
 		{
-			printf("-----%d\n", strr->listb->content);
-			strr->listb = strr->listb->next;
+			printf("-----%d\n", strr->lista->content);
+			strr->lista = strr->lista->next;
 		}
 		temp1 = strr->lista;
 		// swap_a(strr->lista);
