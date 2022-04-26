@@ -47,7 +47,7 @@ re: fclean all
 bonus: $(OBJ_FILES_BONUS)
 	@make -C mandatory/libft
 	@cp mandatory/libft/libft.a ./
-	$(CC) $(FLAGS) $(OBJ_FILES_BONUS) -o $(NAME) libft.a -g
+	$(CC) $(FLAGS) $(OBJ_FILES_BONUS) -o $(NAME) libft.a -fsanitize=address -g
 
 .PHONY:
 	all clean fclean re bonus

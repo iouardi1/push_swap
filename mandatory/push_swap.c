@@ -203,19 +203,40 @@ void	sort_first_two(t_struct *strr)
 	}
 }
 
-void	indexing_stuck(t_list **list)
+void	indexing_stack(t_list **list)
 {
-	(*list)->index = 0;
-	while ((*list))
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = *list;
+	while (tmp)
 	{
-		(*list)->index++;
-		(*list) = (*list)->next;
+		tmp->index = i++;
+		tmp = tmp->next;
 	}
+}
+
+int	find_position(t_struct *strr, int element)
+{
+	t_list	*tmp;
+	indexing_stack(&strr->lista);
+
+	tmp = strr->lista;
+	while (tmp)
+	{
+		if (element > tmp->content && element < tmp->next->content)
+			return (tmp->index);
+		tmp = tmp->next;
+	}
+	return (-1);
 }
 
 void	calculating_instruc(t_struct *strr)
 {
-	indexing_stuck(&strr->listb);
+	t_list	*tmp;
+	indexing_stack(&strr->listb);
+	tmp = strr->listb;
 	strr->listb->num_of_instru = 0;
 	while (*)
 }
@@ -224,7 +245,7 @@ int main(int argc, char **argv)
 {
 	t_struct	*strr = malloc(sizeof(t_struct));
 	t_list		*temp1;
-	t_list		*temp2;
+	// t_list		*temp2;
 	int			i;
 
 	strr->lista = NULL;
@@ -242,42 +263,43 @@ int main(int argc, char **argv)
 			ft_lstadd_back(&strr->lista, ft_lstnew(ft_atoi(argv[i])));
 			i++;
 		}
+		temp1 = strr->lista;
+		indexing_stack(&strr->lista);
 		// printf("%d=====\n", strr->lista->content);
-		temp2 = strr->listb;
-		temp1 = strr->lista;
-		calcul_moyenne(strr, &temp1);
-		printf("moyenne:%d\n", strr->moyenne);
-		temp1 = strr->lista;
-		biggest_num(strr, &temp1);
-		printf("beggy:%d\n", strr->beggy);
-		temp1 = strr->lista;
-		smallest_num(strr, &temp1);
-		printf("smally:%d\n", strr->smally);
-		temp1 = strr->lista;
-		while (temp1)
-		{
-			printf("++++++%d\n", temp1->content);
-			temp1 = temp1->next;
-		}
-		temp1 = strr->lista;
-		move_to_stack_b(strr);
-		sort_first_two(strr);
+		// temp2 = strr->listb;
+		// temp1 = strr->lista;
+		// calcul_moyenne(strr, &temp1);
+		// printf("moyenne:%d\n", strr->moyenne);
+		// temp1 = strr->lista;
+		// biggest_num(strr, &temp1);
+		// printf("beggy:%d\n", strr->beggy);
+		// temp1 = strr->lista;
+		// smallest_num(strr, &temp1);
+		// printf("smally:%d\n", strr->smally);
+		// temp1 = strr->lista;
+		// while (temp1)
+		// {
+		// 	printf("++++++%d\n", temp1->content);
+		// 	temp1 = temp1->next;
+		// }
+		// temp1 = strr->lista;
+		// move_to_stack_b(strr);
+		// sort_first_two(strr);
 		// while (temp1)
 		// {
 		// 	printf("-----%d\n", temp1->content);
 		// 	temp1 = temp1->next;
 		// }
-		while (strr->lista)
-		{
-			printf("-----%d\n", strr->lista->content);
-			strr->lista = strr->lista->next;
-		}
-		temp1 = strr->lista;
+		// while (strr->lista)
+		// {
+		// 	printf("-----%d\n", strr->lista->content);
+		// 	strr->lista = strr->lista->next;
+		// }
+		// temp1 = strr->lista;
 		// swap_a(strr->lista);
 		// push(&strr->lista, &strr->listb);
 		// push(&strr->listb, &strr->lista);
 		// reverse_rotate(&strr->lista);
-		temp1 = strr->lista;
 		
 	}
 	else
