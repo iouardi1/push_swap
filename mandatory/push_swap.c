@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/25 04:59:41 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/27 05:45:06 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,16 +179,16 @@ void	move_to_stack_b(t_struct *strr)
 	t_list	*tmp;
 
 	tmp = strr->lista;
-	while (ft_lstsize(strr->lista) > 2)
+	while (ft_lstsize(tmp) > 2)
 	{
-		if (strr->lista->content != strr->beggy && strr->lista->content != strr->smally)
+		if (tmp->content != strr->beggy && tmp->content != strr->smally)
 		{
-			push(&strr->lista, &strr->listb);
+			push(&tmp, &strr->listb);
 			strr->instruc_num++;
 		}
 		else
 		{
-			rotate(&strr->lista);
+			rotate(&tmp);
 			strr->instruc_num++;
 		}
 	}
@@ -203,7 +203,7 @@ void	sort_first_two(t_struct *strr)
 	}
 }
 
-void	indexing_stack(t_list **list)
+int	indexing_stack(t_list **list)
 {
 	t_list	*tmp;
 	int		i;
@@ -215,13 +215,14 @@ void	indexing_stack(t_list **list)
 		tmp->index = i++;
 		tmp = tmp->next;
 	}
+	return (tmp->index);
 }
 
 int	find_position(t_struct *strr, int element)
 {
 	t_list	*tmp;
-	indexing_stack(&strr->lista);
 
+	indexing_stack(&strr->lista);
 	tmp = strr->lista;
 	while (tmp)
 	{
@@ -235,17 +236,51 @@ int	find_position(t_struct *strr, int element)
 void	calculating_instruc(t_struct *strr)
 {
 	t_list	*tmp;
-	indexing_stack(&strr->listb);
-	tmp = strr->listb;
+	int		pos;
+
+	strr->listb->demi_stack = (indexing_stack(&strr->listb) / 2);
+	strr->lista->demi_stack = (indexing_stack(&strr->lista) / 2);
 	strr->listb->num_of_instru = 0;
-	while (*)
+	tmp = strr->listb;
+	while (tmp)
+	{
+		pos = find_position(strr, tmp->content);
+		if (pos >= strr->lista->demi_stack)
+		{
+			tmp->num_of_instru = indexing_stack(&strr->lista) - pos + 1;
+			if (tmp->index > tmp->demi_stack)
+				tmp->num_of_instru += indexing_stack(&tmp) - tmp->index + 1;
+			else
+				tmp->num_of_instru += tmp->index;
+		}
+		else if (tmp->index <= tmp->demi_stack)
+				tmp->num_of_instru = pos + tmp->index;
+			else
+				tmp->num_of_instru = pos + (indexing_stack(&tmp) - tmp->index + 1);
+		tmp = tmp->next;
+	}
 }
+
+// void	min_instruc_found(t_struct *strr, int element)
+// {
+// 	t_list	*tmp;
+// 	int		min;
+
+// 	tmp = strr->listb;
+// 	while (tmp->index != indexing_stack(&tmp))
+// 	{	min = tmp->num_of_instru;
+// 		if (min > tmp->num_of_instru)
+// 		{
+// 			min = tmp->num_of_instru;
+// 		tmp = tmp->next;
+// 	}
+// }
 
 int main(int argc, char **argv)
 {
 	t_struct	*strr = malloc(sizeof(t_struct));
 	t_list		*temp1;
-	// t_list		*temp2;
+	t_list		*temp2;
 	int			i;
 
 	strr->lista = NULL;
@@ -264,32 +299,41 @@ int main(int argc, char **argv)
 			i++;
 		}
 		temp1 = strr->lista;
-		indexing_stack(&strr->lista);
+		// indexing_stack(&strr->lista);
 		// printf("%d=====\n", strr->lista->content);
 		// temp2 = strr->listb;
 		// temp1 = strr->lista;
-		// calcul_moyenne(strr, &temp1);
-		// printf("moyenne:%d\n", strr->moyenne);
-		// temp1 = strr->lista;
-		// biggest_num(strr, &temp1);
-		// printf("beggy:%d\n", strr->beggy);
-		// temp1 = strr->lista;
-		// smallest_num(strr, &temp1);
-		// printf("smally:%d\n", strr->smally);
-		// temp1 = strr->lista;
-		// while (temp1)
-		// {
-		// 	printf("++++++%d\n", temp1->content);
-		// 	temp1 = temp1->next;
-		// }
-		// temp1 = strr->lista;
-		// move_to_stack_b(strr);
+		calcul_moyenne(strr, &temp1);
+		printf("moyenne:%d\n", strr->moyenne);
+		temp1 = strr->lista;
+		biggest_num(strr, &temp1);
+		printf("beggy:%d\n", strr->beggy);
+		temp1 = strr->lista;
+		smallest_num(strr, &temp1);
+		printf("smally:%d\n", strr->smally);
+		temp1 = strr->lista;
+		while (temp1)
+		{
+			printf("stack a at first: %d\n", temp1->content);
+			temp1 = temp1->next;
+		}
+		puts("\n");
+		move_to_stack_b(strr);
+		temp1 = strr->lista;
+		temp2 = strr->listb;
+		while (temp2)
+		{
+			printf("stack b at first : %d\n", temp2->content);
+			temp2 = temp2->next;
+		}
+		puts("\n\n");
+		while (temp1)
+		{
+			printf("stack a after : %d\n", temp1->content);
+			temp1 = temp1->next;
+		}
 		// sort_first_two(strr);
-		// while (temp1)
-		// {
-		// 	printf("-----%d\n", temp1->content);
-		// 	temp1 = temp1->next;
-		// }
+		// calculating_instruc(strr);
 		// while (strr->lista)
 		// {
 		// 	printf("-----%d\n", strr->lista->content);
