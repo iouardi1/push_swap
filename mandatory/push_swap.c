@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/27 05:45:06 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/29 06:53:15 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,19 +176,16 @@ void	smallest_num(t_struct *strr, t_list **list)
 
 void	move_to_stack_b(t_struct *strr)
 {
-	t_list	*tmp;
-
-	tmp = strr->lista;
-	while (ft_lstsize(tmp) > 2)
+	while (ft_lstsize(strr->lista) > 2)
 	{
-		if (tmp->content != strr->beggy && tmp->content != strr->smally)
+		if (strr->lista->content != strr->beggy && strr->lista->content != strr->smally)
 		{
-			push(&tmp, &strr->listb);
+			push(&strr->lista, &strr->listb);
 			strr->instruc_num++;
 		}
 		else
 		{
-			rotate(&tmp);
+			rotate(&strr->lista);
 			strr->instruc_num++;
 		}
 	}
@@ -208,14 +205,15 @@ int	indexing_stack(t_list **list)
 	t_list	*tmp;
 	int		i;
 
-	i = 0;
+	i = 1;
 	tmp = *list;
-	while (tmp)
+	while ((tmp)->next)
 	{
-		tmp->index = i++;
-		tmp = tmp->next;
+		(tmp)->index = i++;
+		(tmp) = (tmp)->next;
 	}
-	return (tmp->index);
+	(tmp)->index = i;
+	return ((tmp)->index + 1);
 }
 
 int	find_position(t_struct *strr, int element)
@@ -227,7 +225,7 @@ int	find_position(t_struct *strr, int element)
 	while (tmp)
 	{
 		if (element > tmp->content && element < tmp->next->content)
-			return (tmp->index);
+			return (tmp->index + 1);
 		tmp = tmp->next;
 	}
 	return (-1);
@@ -245,7 +243,7 @@ void	calculating_instruc(t_struct *strr)
 	while (tmp)
 	{
 		pos = find_position(strr, tmp->content);
-		if (pos >= strr->lista->demi_stack)
+		if (pos <= strr->lista->demi_stack)
 		{
 			tmp->num_of_instru = indexing_stack(&strr->lista) - pos + 1;
 			if (tmp->index > tmp->demi_stack)
@@ -261,20 +259,105 @@ void	calculating_instruc(t_struct *strr)
 	}
 }
 
-// void	min_instruc_found(t_struct *strr, int element)
-// {
-// 	t_list	*tmp;
-// 	int		min;
+int	min_instruc_found(t_struct *strr)
+{
+	t_list	*tmp;
+	int		min;
 
-// 	tmp = strr->listb;
-// 	while (tmp->index != indexing_stack(&tmp))
-// 	{	min = tmp->num_of_instru;
-// 		if (min > tmp->num_of_instru)
-// 		{
-// 			min = tmp->num_of_instru;
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = strr->listb;
+	calculating_instruc(strr);
+	min = tmp->num_of_instru;
+	while (tmp)
+	{	
+		if (min >= tmp->num_of_instru)
+			min = tmp->num_of_instru;
+		tmp = tmp->next;
+	}
+	tmp = strr->listb;
+	while (tmp)
+	{
+		if (min == tmp->num_of_instru)
+			return (tmp->index);
+		tmp = tmp->next;
+	}
+	return (-1);	
+}
+
+int	that_fockin_element_pos_in_a(t_struct *strr)
+{
+	t_list	*tmp;
+
+	tmp = strr->listb;
+	while (tmp)
+	{
+		if (tmp->index == min_instruc_found(strr))
+			return (find_position(strr, tmp->content));
+		tmp = tmp->next;
+	}
+	return (-1);
+}
+
+void	sorting_de_merde(t_struct *strr)
+{
+	t_list	*tmp1;
+	t_list	*tmp2;
+	int		min_instruc_index;
+
+	while (strr->listb)
+	{
+		tmp1 = strr->listb;
+		tmp2 = strr->lista;
+		calculating_instruc(strr);
+		min_instruc_index = min_instruc_found(strr);
+		if (min_instruc_index <= that_fockin_element_pos_in_a(strr))
+		{
+			while (tmp1->index <= min_instruc_index)
+			{
+				rotate(&tmp1);
+				rotate(&tmp2);
+				printf("rr\n");
+				strr->instruc_num++;
+				// tmp1 = strr->listb->next;
+				// tmp2 = strr->lista->next;
+				tmp1->index++;
+				tmp2->index++;
+			}
+			while (tmp2->index <= that_fockin_element_pos_in_a(strr))
+			{
+				rotate(&tmp2);
+				printf("ra\n");
+				// tmp2 = strr->lista;
+				strr->instruc_num++;
+			}
+			push(&strr->listb, &strr->lista);
+			strr->instruc_num++;
+			printf("pa\n");
+		}
+		else
+		{
+			while (tmp1->index <= that_fockin_element_pos_in_a(strr))
+			{
+				rotate(&tmp1);
+				rotate(&tmp2);
+				printf("rr\n");
+				strr->instruc_num++;
+				tmp1 = strr->listb->next;
+				tmp2 = strr->lista->next;
+			}
+			while (tmp1->index <= min_instruc_index)
+			{
+				rotate(&tmp1);
+				printf("ra\n");
+				tmp1 = strr->lista;
+				strr->instruc_num++;
+			}
+			push(&strr->listb, &strr->lista);
+			strr->instruc_num++;
+			printf("pa\n");
+		}
+		strr->listb = strr->listb->next;
+	}
+}
 
 int main(int argc, char **argv)
 {
@@ -299,41 +382,58 @@ int main(int argc, char **argv)
 			i++;
 		}
 		temp1 = strr->lista;
+		temp2 = strr->listb;
 		// indexing_stack(&strr->lista);
 		// printf("%d=====\n", strr->lista->content);
 		// temp2 = strr->listb;
 		// temp1 = strr->lista;
 		calcul_moyenne(strr, &temp1);
-		printf("moyenne:%d\n", strr->moyenne);
+		// printf("moyenne:%d\n", strr->moyenne);
 		temp1 = strr->lista;
 		biggest_num(strr, &temp1);
-		printf("beggy:%d\n", strr->beggy);
+		// printf("beggy:%d\n", strr->beggy);
 		temp1 = strr->lista;
 		smallest_num(strr, &temp1);
-		printf("smally:%d\n", strr->smally);
-		temp1 = strr->lista;
-		while (temp1)
-		{
-			printf("stack a at first: %d\n", temp1->content);
-			temp1 = temp1->next;
-		}
-		puts("\n");
+		// printf("smally:%d\n", strr->smally);
+		// temp1 = strr->lista;
+		// while (temp1)
+		// {
+		// 	printf("stack a at first: %d\n", temp1->content);
+		// 	temp1 = temp1->next;
+		// }
+		// puts("\n");
 		move_to_stack_b(strr);
+		// temp2 = strr->listb;
+		// while (temp2)
+		// {
+		// 	printf("stack b at first : %d\n", temp2->content);
+		// 	temp2 = temp2->next;
+		// }
+		// puts("\n\n");
+		sort_first_two(strr);
+		// temp1 = strr->lista;
+		// while (temp1)
+		// {
+		// 	printf("stack a after : %d\n", temp1->content);
+		// 	temp1 = temp1->next;
+		// }
 		temp1 = strr->lista;
-		temp2 = strr->listb;
-		while (temp2)
-		{
-			printf("stack b at first : %d\n", temp2->content);
-			temp2 = temp2->next;
-		}
-		puts("\n\n");
-		while (temp1)
-		{
-			printf("stack a after : %d\n", temp1->content);
-			temp1 = temp1->next;
-		}
-		// sort_first_two(strr);
+		// printf("%d\n", temp1->content);
+		// printf ("%d\n", indexing_stack(&temp1));
+		temp1 = strr->listb;
+		// printf("%d\n", temp1->index);
+		// printf("%d\n", temp1->next->index);
+		// printf ("%d\n", find_position(strr, temp1->content));
 		// calculating_instruc(strr);
+		// while (temp1)
+		// {
+		// 	printf("%d\n", temp1->num_of_instru);
+		// 	temp1 = temp1->next;
+		// }
+		// temp1 = strr->listb;
+		// printf("min = %d\n", min_instruc_found(strr));
+		sorting_de_merde(strr);
+
 		// while (strr->lista)
 		// {
 		// 	printf("-----%d\n", strr->lista->content);
@@ -344,12 +444,12 @@ int main(int argc, char **argv)
 		// push(&strr->lista, &strr->listb);
 		// push(&strr->listb, &strr->lista);
 		// reverse_rotate(&strr->lista);
-		
+
 	}
 	else
 	{
 		write (2, "error!\n", 8);
-		exit (1); 
+		exit (1);
 	}
 	return (0);
 }

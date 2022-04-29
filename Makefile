@@ -33,7 +33,7 @@ $(NAME): $(OBJ_FILES)
 	@cp mandatory/libft/libft.a ./
 	$(CC) $(OBJ_FILES) -o $(NAME) libft.a
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@ -g
 
 clean:
 	find . -name "*.o" -delete
