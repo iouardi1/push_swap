@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/29 06:53:15 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/04/30 07:55:29 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,8 +224,8 @@ int	find_position(t_struct *strr, int element)
 	tmp = strr->lista;
 	while (tmp)
 	{
-		if (element > tmp->content && element < tmp->next->content)
-			return (tmp->index + 1);
+		if (element < tmp->content)
+			return (tmp->index);
 		tmp = tmp->next;
 	}
 	return (-1);
@@ -299,63 +299,89 @@ int	that_fockin_element_pos_in_a(t_struct *strr)
 
 void	sorting_de_merde(t_struct *strr)
 {
-	t_list	*tmp1;
-	t_list	*tmp2;
+	// t_list	*tmp1;
+	// t_list	*tmp2;
 	int		min_instruc_index;
+	int		min_pos_in_a;
 
-	while (strr->listb)
+	while (ft_lstsize(strr->listb))
 	{
-		tmp1 = strr->listb;
-		tmp2 = strr->lista;
-		calculating_instruc(strr);
+		// tmp1 = strr->listb;
+		// printf("%d\n", tmp1->content);
+		// tmp2 = strr->lista;
+		// printf("%d\n", tmp2->content);
+		// calculating_instruc(strr);
 		min_instruc_index = min_instruc_found(strr);
-		if (min_instruc_index <= that_fockin_element_pos_in_a(strr))
+		// printf("%d\n", min_instruc_index);
+		min_pos_in_a = that_fockin_element_pos_in_a(strr);
+		if (min_instruc_index <= min_pos_in_a)
 		{
-			while (tmp1->index <= min_instruc_index)
+			printf("%d\n", strr->listb->index);
+			while (strr->listb->index < min_instruc_index)
 			{
-				rotate(&tmp1);
-				rotate(&tmp2);
+				rotate(&strr->listb);
+				rotate(&strr->lista);
 				printf("rr\n");
+				// indexing_stack(&strr->listb);
 				strr->instruc_num++;
-				// tmp1 = strr->listb->next;
-				// tmp2 = strr->lista->next;
-				tmp1->index++;
-				tmp2->index++;
+				// strr->listb = strr->listb->next;
+				// strr->lista = strr->lista->next;
+				strr->listb->index++;
+				strr->lista->index++;
 			}
-			while (tmp2->index <= that_fockin_element_pos_in_a(strr))
+			// printf("%d\n", that_fockin_element_pos_in_a(strr));
+			while (strr->lista->index < min_pos_in_a)
 			{
-				rotate(&tmp2);
+				rotate(&strr->lista);
+				// printf("---------+%d\n", strr->lista->content);
 				printf("ra\n");
-				// tmp2 = strr->lista;
+				// strr->lista = strr->lista;
 				strr->instruc_num++;
+				strr->lista->index++;
 			}
+				// printf("---------+%d\n", strr->lista->content);
 			push(&strr->listb, &strr->lista);
+			// printf("tp1= %d\n", strr->listb->content);
+			// printf("tp2= %d\n", strr->lista->content);
 			strr->instruc_num++;
 			printf("pa\n");
 		}
 		else
 		{
-			while (tmp1->index <= that_fockin_element_pos_in_a(strr))
+			puts("here--\n\n");
+			return;
+			while (strr->listb->index < min_pos_in_a)
 			{
-				rotate(&tmp1);
-				rotate(&tmp2);
+				rotate(&strr->listb);
+				rotate(&strr->lista);
 				printf("rr\n");
 				strr->instruc_num++;
-				tmp1 = strr->listb->next;
-				tmp2 = strr->lista->next;
+				strr->listb->index++;
+				strr->lista->index++;
 			}
-			while (tmp1->index <= min_instruc_index)
+			while (strr->listb->index < min_instruc_index)
 			{
-				rotate(&tmp1);
+				rotate(&strr->listb);
 				printf("ra\n");
-				tmp1 = strr->lista;
+				strr->listb->index++;
 				strr->instruc_num++;
 			}
 			push(&strr->listb, &strr->lista);
 			strr->instruc_num++;
 			printf("pa\n");
 		}
-		strr->listb = strr->listb->next;
+		// while(strr->listb)
+		// {
+		// 	printf("listb = %d\n", strr->listb->content);
+		// 	strr->listb = strr->listb->next;
+		// }
+		// while(strr->lista)
+		// {
+		// 	printf("lista = %d\n", strr->lista->content);
+		// 	strr->lista = strr->lista->next;
+		// }
+		// printf("lista = %d\n", strr->lista->next->content);
+		// strr->listb = strr->listb->next;
 	}
 }
 
