@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/30 07:55:29 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/01 02:01:12 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	push(t_list **lista, t_list **listb)
 {
 	t_list	*new_list;
 
-	if (*lista == NULL || (*lista)->next == NULL)
+	if (*lista == NULL)
 		return ;
 	ft_lstadd_front(listb, ft_lstnew((*lista)->content));
 	new_list = *lista;
@@ -181,11 +181,13 @@ void	move_to_stack_b(t_struct *strr)
 		if (strr->lista->content != strr->beggy && strr->lista->content != strr->smally)
 		{
 			push(&strr->lista, &strr->listb);
+			printf("pb\n");
 			strr->instruc_num++;
 		}
 		else
 		{
 			rotate(&strr->lista);
+			printf("ra\n");
 			strr->instruc_num++;
 		}
 	}
@@ -196,6 +198,7 @@ void	sort_first_two(t_struct *strr)
 	if (strr->lista->content == strr->beggy)
 	{
 		rotate(&strr->lista);
+		printf("ra\n");
 		strr->instruc_num++;
 	}
 }
@@ -299,57 +302,37 @@ int	that_fockin_element_pos_in_a(t_struct *strr)
 
 void	sorting_de_merde(t_struct *strr)
 {
-	// t_list	*tmp1;
-	// t_list	*tmp2;
 	int		min_instruc_index;
 	int		min_pos_in_a;
 
 	while (ft_lstsize(strr->listb))
 	{
-		// tmp1 = strr->listb;
-		// printf("%d\n", tmp1->content);
-		// tmp2 = strr->lista;
-		// printf("%d\n", tmp2->content);
-		// calculating_instruc(strr);
 		min_instruc_index = min_instruc_found(strr);
-		// printf("%d\n", min_instruc_index);
 		min_pos_in_a = that_fockin_element_pos_in_a(strr);
 		if (min_instruc_index <= min_pos_in_a)
 		{
-			printf("%d\n", strr->listb->index);
 			while (strr->listb->index < min_instruc_index)
 			{
 				rotate(&strr->listb);
 				rotate(&strr->lista);
 				printf("rr\n");
-				// indexing_stack(&strr->listb);
 				strr->instruc_num++;
-				// strr->listb = strr->listb->next;
-				// strr->lista = strr->lista->next;
 				strr->listb->index++;
 				strr->lista->index++;
 			}
-			// printf("%d\n", that_fockin_element_pos_in_a(strr));
 			while (strr->lista->index < min_pos_in_a)
 			{
 				rotate(&strr->lista);
-				// printf("---------+%d\n", strr->lista->content);
 				printf("ra\n");
-				// strr->lista = strr->lista;
 				strr->instruc_num++;
 				strr->lista->index++;
 			}
-				// printf("---------+%d\n", strr->lista->content);
 			push(&strr->listb, &strr->lista);
-			// printf("tp1= %d\n", strr->listb->content);
-			// printf("tp2= %d\n", strr->lista->content);
 			strr->instruc_num++;
 			printf("pa\n");
 		}
 		else
 		{
-			puts("here--\n\n");
-			return;
 			while (strr->listb->index < min_pos_in_a)
 			{
 				rotate(&strr->listb);
@@ -362,7 +345,7 @@ void	sorting_de_merde(t_struct *strr)
 			while (strr->listb->index < min_instruc_index)
 			{
 				rotate(&strr->listb);
-				printf("ra\n");
+				printf("rb\n");
 				strr->listb->index++;
 				strr->instruc_num++;
 			}
@@ -370,19 +353,13 @@ void	sorting_de_merde(t_struct *strr)
 			strr->instruc_num++;
 			printf("pa\n");
 		}
-		// while(strr->listb)
-		// {
-		// 	printf("listb = %d\n", strr->listb->content);
-		// 	strr->listb = strr->listb->next;
-		// }
-		// while(strr->lista)
-		// {
-		// 	printf("lista = %d\n", strr->lista->content);
-		// 	strr->lista = strr->lista->next;
-		// }
-		// printf("lista = %d\n", strr->lista->next->content);
-		// strr->listb = strr->listb->next;
 	}
+}
+
+void	final_sorting(t_struct *strr)
+{
+	while (strr->lista->content != strr->smally)
+		reverse_rotate(&strr->lista);
 }
 
 int main(int argc, char **argv)
@@ -407,6 +384,8 @@ int main(int argc, char **argv)
 			ft_lstadd_back(&strr->lista, ft_lstnew(ft_atoi(argv[i])));
 			i++;
 		}
+		temp1 = strr->lista;
+		// check_if_its_already_sorted(temp1);
 		temp1 = strr->lista;
 		temp2 = strr->listb;
 		// indexing_stack(&strr->lista);
@@ -446,7 +425,6 @@ int main(int argc, char **argv)
 		temp1 = strr->lista;
 		// printf("%d\n", temp1->content);
 		// printf ("%d\n", indexing_stack(&temp1));
-		temp1 = strr->listb;
 		// printf("%d\n", temp1->index);
 		// printf("%d\n", temp1->next->index);
 		// printf ("%d\n", find_position(strr, temp1->content));
@@ -459,12 +437,15 @@ int main(int argc, char **argv)
 		// temp1 = strr->listb;
 		// printf("min = %d\n", min_instruc_found(strr));
 		sorting_de_merde(strr);
+		// final_sorting(strr);
 
-		// while (strr->lista)
-		// {
-		// 	printf("-----%d\n", strr->lista->content);
-		// 	strr->lista = strr->lista->next;
-		// }
+		temp1 = strr->listb;
+		temp1 = strr->lista;
+		while (temp1)
+		{
+			printf("-----%d\n", temp1->content);
+			temp1 = temp1->next;
+		}
 		// temp1 = strr->lista;
 		// swap_a(strr->lista);
 		// push(&strr->lista, &strr->listb);
