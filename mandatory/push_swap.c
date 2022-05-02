@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/01 02:01:12 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/02 20:59:45 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,25 +222,36 @@ int	indexing_stack(t_list **list)
 int	find_position(t_struct *strr, int element)
 {
 	t_list	*tmp;
+	int		min;
+	int		pos;
 
 	indexing_stack(&strr->lista);
 	tmp = strr->lista;
+	min = tmp->content;
 	while (tmp)
 	{
-		if (element < tmp->content)
-			return (tmp->index);
+		if (element < tmp->content && min < tmp->content)
+		{
+			min = tmp->content;
+			pos = tmp->index;
+		}
 		tmp = tmp->next;
 	}
-	return (-1);
+	return (pos);
 }
 
 void	calculating_instruc(t_struct *strr)
 {
 	t_list	*tmp;
 	int		pos;
+	int		num_elements_a;
+	int		num_elements_b;
 
-	strr->listb->demi_stack = (indexing_stack(&strr->listb) / 2);
-	strr->lista->demi_stack = (indexing_stack(&strr->lista) / 2);
+	num_elements_b = indexing_stack(&strr->listb);
+	num_elements_a = indexing_stack(&strr->lista);
+	printf("wht indexing returns: %d\n", num_elements_a);
+	strr->listb->demi_stack = (num_elements_b / 2);
+	strr->lista->demi_stack = (num_elements_a / 2);
 	strr->listb->num_of_instru = 0;
 	tmp = strr->listb;
 	while (tmp)
@@ -248,16 +259,17 @@ void	calculating_instruc(t_struct *strr)
 		pos = find_position(strr, tmp->content);
 		if (pos <= strr->lista->demi_stack)
 		{
-			tmp->num_of_instru = indexing_stack(&strr->lista) - pos + 1;
+			tmp->num_of_instru = num_elements_a - pos + 1;
+			// tmp->num_of_instru = pos + 1; // new
 			if (tmp->index > tmp->demi_stack)
-				tmp->num_of_instru += indexing_stack(&tmp) - tmp->index + 1;
+				tmp->num_of_instru += num_elements_b - tmp->index + 1;
 			else
 				tmp->num_of_instru += tmp->index;
 		}
 		else if (tmp->index <= tmp->demi_stack)
 				tmp->num_of_instru = pos + tmp->index;
 			else
-				tmp->num_of_instru = pos + (indexing_stack(&tmp) - tmp->index + 1);
+				tmp->num_of_instru = pos + num_elements_b - tmp->index + 1;
 		tmp = tmp->next;
 	}
 }
@@ -416,6 +428,7 @@ int main(int argc, char **argv)
 		// }
 		// puts("\n\n");
 		sort_first_two(strr);
+		calculating_instruc(strr);
 		// temp1 = strr->lista;
 		// while (temp1)
 		// {
@@ -437,7 +450,7 @@ int main(int argc, char **argv)
 		// temp1 = strr->listb;
 		// printf("min = %d\n", min_instruc_found(strr));
 		sorting_de_merde(strr);
-		// final_sorting(strr);
+		final_sorting(strr);
 
 		temp1 = strr->listb;
 		temp1 = strr->lista;
