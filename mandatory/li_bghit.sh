@@ -1,5 +1,5 @@
 #!/bin/sh
-awk -v loop=10 -v range=10 'BEGIN{
+awk -v loop=100 -v range=100 'BEGIN{
   srand()
   do {
     numb = 1 + int(rand() * range)

@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 18:35:58 by iouardi           #+#    #+#             */
-/*   Updated: 2022/04/27 03:10:56 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/05 01:34:08 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct s_list
 {
 	int				content;
 	int				index;
+	int				flag;
 	int				num_of_instru;
-	int				demi_stack;
 	struct	s_list	*next;
 }	t_list;
 int		ft_lstsize(t_list *lst);
