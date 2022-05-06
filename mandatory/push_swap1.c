@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:24:18 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/05 01:04:48 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/06 18:39:14 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,6 @@ void	calculating_instruc(t_struct *strr)
 	while (tmp)
 	{
 		pos = find_position(strr, tmp->content);
-		printf("pos found : %d\n", pos);
 		if (pos <= strr->lista->demi_stack)
 		{
 			tmp->num_of_instru = num_elements_a - pos + 1;
