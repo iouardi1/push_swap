@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 21:01:44 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/06 18:46:58 by iouardi          ###   ########.fr       */
+/*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
+/*   Updated: 2022/05/07 19:16:53 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,17 +176,6 @@ void	smallest_num(t_struct *strr, t_list **list)
 
 void	move_to_stack_b(t_struct *strr)
 {
-	t_list	*tmp;
-
-	strr->moyenne = 0;
-	strr->beggy = 0;
-	strr->smally = 0;
-	tmp = strr->lista;
-	calcul_moyenne(strr, &tmp);
-	tmp = strr->lista;
-	biggest_num(strr, &tmp);
-	tmp = strr->lista;
-	smallest_num(strr, &tmp);
 	while (ft_lstsize(strr->lista) > 2)
 	{
 		if (strr->lista->content != strr->beggy && strr->lista->content != strr->smally)
@@ -226,209 +215,30 @@ void	fill_stack_a(t_struct *strr, char **argv)
 	}
 }
 
-int	indexing_stack(t_list **list)
+void	indexing_stack(t_list **list)
 {
 	t_list	*tmp;
 	int		i;
+	int		size;
+	int		demi_size;
 
 	i = 0;
 	tmp = *list;
-	while ((tmp)->next)
+	size = ft_lstsize(tmp);
+	if (size % 2 != 0)
+		demi_size = (size / 2) + 1;
+	else
+		demi_size = size / 2;
+	while (i < demi_size)
 	{
 		(tmp)->index = i++;
-		(tmp) = (tmp)->next;
-	}
-	(tmp)->index = i;
-	return ((tmp)->index);
-}
-
-int    find_position(t_struct *strr, int element)
-{
-    t_list    *tmp;
-    int        min;
-    int        pos;
-    int        flag;
-
-    indexing_stack(&strr->lista);
-    flag = 0;
-    min = 1;
-    pos = ft_lstsize(strr->lista);
-    tmp = strr->lista;
-    while (tmp)
-    {
-        if (element < tmp->content  && !flag)
-        {
-            min = tmp->content;
-            flag = 1;
-            pos = tmp->index;
-        }
-        else if ((element < tmp->content && min > tmp->content))
-        {
-             min = tmp->content;
-             pos = tmp->index;
-        }
-        tmp = tmp->next;
-    }
-    return (pos);
-}
-
-void fill_demi_stacks(t_struct *strr)
-{
-	int		all_elems;
-	
-	all_elems = indexing_stack(&strr->lista);
-	if (!all_elems % 2)
-		strr->demi_stack_a = all_elems / 2;
-	else
-		strr->demi_stack_a = (all_elems + 1) / 2;
-	all_elems = indexing_stack(&strr->listb);
-	if (!all_elems % 2)
-		strr->demi_stack_b = all_elems / 2;
-	else
-		strr->demi_stack_b = (all_elems + 1) / 2;
-}
-
-void	calculating_instruc(t_struct *strr)
-{
-	t_list	*tmpa;
-	t_list	*tmpb;
-	int		pos;
-
-	fill_demi_stacks(strr);
-	strr->lista->num_of_instru = 0;
-	tmpb = strr->listb;
-	tmpa = strr->lista;
-	strr->lista->flag = 1;
-	strr->listb->flag = 1;
-	while (tmpb)
-	{
-		pos = find_position(strr, tmpb->content);
-		if (pos <= strr->demi_stack_a)
-		{
-			strr->lista->flag = 0;
-			tmpb->num_of_instru = pos;
-			if (tmpb->index <= strr->demi_stack_b)
-			{
-				strr->listb->flag = 0;
-				tmpb->num_of_instru += tmpb->index + 1;
-			}
-			else
-				tmpb->num_of_instru += tmpb->index - strr->demi_stack_b + 1;
-		}
-		else if (tmpb->index <= strr->demi_stack_b)
-		{
-			strr->listb->flag = 0;
-			tmpb->num_of_instru = (pos - strr->demi_stack_a) + tmpb->index + 1;
-		}
-			else
-				tmpb->num_of_instru = (pos - strr->demi_stack_a) + tmpb->index 
-					- strr->demi_stack_b + 1;
-		tmpb = tmpb->next;
-	}
-}
-
-int	min_instruc_found(t_struct *strr)
-{
-	t_list	*tmp;
-	int		min;
-
-	tmp = strr->listb;
-	calculating_instruc(strr);
-	min = tmp->num_of_instru;
-	while (tmp)
-	{	
-		if (min >= tmp->num_of_instru)
-			min = tmp->num_of_instru;
 		tmp = tmp->next;
 	}
-	tmp = strr->listb;
-	while (tmp)
+	i = 0;
+	while (i < demi_size && tmp)
 	{
-		if (min == tmp->num_of_instru)
-			return (tmp->index);
+		(tmp)->index = i++;
 		tmp = tmp->next;
-	}
-	return (-1);
-}
-
-int	that_fockin_element_pos_in_a(t_struct *strr)
-{
-	t_list	*tmp;
-
-	tmp = strr->listb;
-	while (tmp)
-	{
-		if (tmp->index == min_instruc_found(strr))
-			return (find_position(strr, tmp->content));
-		tmp = tmp->next;
-	}
-	return (-1);
-}
-
-void	sorting(t_struct *strr)
-{
-	int		min_index;
-	int		pos;
-	int		flag_a;
-	int		flag_b;
-
-	while (ft_lstsize(strr->listb))
-	{
-		flag_a = strr->lista->flag;
-		flag_b = strr->listb->flag;
-		min_index = min_instruc_found(strr);
-		pos = that_fockin_element_pos_in_a(strr);
-		while (pos && min_index && !flag_a && !flag_b)
-		{
-			rotate(&strr->listb);
-			rotate(&strr->lista);
-			printf("rr\n");
-			pos--;
-			min_index--;
-		}
-		while (pos && !flag_a)
-		{
-			rotate(&strr->lista);
-			printf("ra\n");
-			pos--;
-		}
-		while (min_index && !flag_b)
-		{
-			rotate(&strr->listb);
-			printf("rb\n");
-			min_index--;
-		}
-		while (pos && min_index && flag_a && flag_b)
-		{
-			reverse_rotate(&strr->listb);
-			reverse_rotate(&strr->lista);
-			printf("rrr\n");
-			pos--;
-			min_index--;
-		}
-		while (pos && flag_a)
-		{
-			reverse_rotate(&strr->lista);
-			printf("rra\n");
-			pos--;
-		}
-		while (min_index && flag_b)
-		{
-			reverse_rotate(&strr->listb);
-			printf("rrb\n");
-			min_index--;
-		}
-		push(&strr->listb, &strr->lista);
-		printf("pa\n");
-	}
-}
-
-void	final_sorting(t_struct *strr)
-{
-	while (strr->lista->content != strr->smally)
-	{
-		rotate(&strr->lista);
-		printf("rra\n");
 	}
 }
 
@@ -444,16 +254,17 @@ int main(int argc, char **argv)
 	{
 		check_error(argv, argc);
 		fill_stack_a(strr, argv);
-		tmp1 = strr->lista;
-		move_to_stack_b(strr);
-		sort_first_two(strr);
+		// move_to_stack_b(strr);
+		// sort_first_two(strr);
 		tmp1 = strr->listb;
-		sorting(strr);
+		tmp1 = strr->lista;
+		indexing_stack(&tmp1);
+		// sorting(strr);
 		// final_sorting(strr);
 		tmp1 = strr->lista;
 		while (tmp1)
 		{
-			printf("%d\n", tmp1->content);
+			printf("stack a : %d index : %d\n", tmp1->content, tmp1->index);
 			tmp1 = tmp1->next;
 		}
 	}
