@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 21:01:44 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/07 17:26:29 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/07 21:23:03 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,38 +244,38 @@ int	indexing_stack(t_list **list)
 
 int    find_position(t_struct *strr, int element)
 {
-    t_list    *tmp;
-    int        min;
-    int        pos;
-    int        flag;
+	t_list    *tmp;
+	int        min;
+	int        pos;
+	int        flag;
 
-    indexing_stack(&strr->lista);
-    flag = 0;
-    min = 1;
-    pos = ft_lstsize(strr->lista);
-    tmp = strr->lista;
-    while (tmp)
-    {
-        if (element < tmp->content  && !flag)
-        {
-            min = tmp->content;
-            flag = 1;
-            pos = tmp->index;
-        }
-        else if ((element < tmp->content && min > tmp->content))
-        {
-             min = tmp->content;
-             pos = tmp->index;
-        }
-        tmp = tmp->next;
-    }
-    return (pos);
+	indexing_stack(&strr->lista);
+	flag = 0;
+	min = 1;
+	pos = ft_lstsize(strr->lista);
+	tmp = strr->lista;
+	while (tmp)
+	{
+		if (element < tmp->content  && !flag)
+		{
+			min = tmp->content;
+			flag = 1;
+			pos = tmp->index;
+		}
+		else if ((element < tmp->content && min > tmp->content))
+		{
+			min = tmp->content;
+			pos = tmp->index;
+		}
+		tmp = tmp->next;
+	}
+	return (pos);
 }
 
 void fill_demi_stacks(t_struct *strr)
 {
 	int		all_elems;
-	
+
 	all_elems = indexing_stack(&strr->lista);
 	if (!all_elems % 2)
 		strr->demi_stack_a = all_elems / 2;
