@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/07 23:47:00 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/08 00:06:13 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	sort_first_two(t_struct *strr)
 	}
 }
 
-int	indexing_stack(t_list **list)
+int	indexing_stack(t_list *list)
 {
 	t_list	*tmp;
 	int		i;
@@ -234,7 +234,7 @@ int	indexing_stack(t_list **list)
 	int		demi_size;
 
 	i = 0;
-	tmp = *list;
+	tmp = list;
 	size = ft_lstsize(tmp);
 	if (size % 2 != 0)
 		demi_size = (size / 2) + 1;
@@ -264,7 +264,7 @@ int    find_position(t_struct *strr, int element)
 	int        flagg;
 	int        flag;
 
-	strr->max_a = indexing_stack(&strr->lista);
+	strr->max_a = indexing_stack(trr->lista);
 	flagg = 0;
 	min = 1;
 	tmp = strr->lista;
@@ -292,7 +292,7 @@ int    find_position(t_struct *strr, int element)
 	}
 	else
 	{
-		strr->min_flag_a = 0;
+		strr->min_flag_a = 1;
 		return (strr->max_a - pos + 1);
 	}
 	return (-1);
@@ -310,7 +310,7 @@ void	calculating_instruc(t_struct *strr)
 	while (tmpb)
 	{
 		pos = find_position(strr, tmpb->content);
-		strr->max_b = indexing_stack(&strr->listb);
+		strr->max_b = indexing_stack(strr->listb);
 		tmpb->num_of_instru = pos;
 		if (!tmpb->flag)
 			tmpb->num_of_instru += tmpb->index + 1;
@@ -351,38 +351,6 @@ int	min_instruc_found(t_struct *strr)
 	}
 	return (-1);
 }
-
-// int	min_flag_in_b(t_struct *strr)
-// {
-// 	t_list	*tmp;
-// 	int		min;
-
-// 	tmp = strr->listb;
-// 	min = min_instruc_found(strr);
-// 	while (tmp)
-// 	{
-// 		if (tmp->index == min)
-// 			return (tmp->flag);
-// 		tmp = tmp->next;
-// 	}
-// 	return (-1);
-// }
-
-// int	min_flag_in_a(t_struct *strr)
-// {
-// 	t_list	*tmp;
-// 	int		pos;
-
-// 	tmp = strr->listb;
-// 	pos = find_position(strr);
-// 	while (tmp)
-// 	{
-// 		if (tmp->index == pos)
-// 			return (tmp->flag);
-// 		tmp = tmp->next;
-// 	}
-// 	return (-1);
-// }
 
 int	element_pos_in_a(t_struct *strr)
 {
@@ -461,7 +429,6 @@ void	sorting(t_struct *strr)
 	}
 }
 
-
 int main(int argc, char **argv)
 {
 	t_struct	*strr;
@@ -477,17 +444,18 @@ int main(int argc, char **argv)
 		tmp1 = strr->lista;
 		move_to_stack_b(strr);
 		sort_first_two(strr);
+		puts("\n");
 		tmp1 = strr->listb;
-		// indexing_stack(&tmp1);
+		// indexing_stack(tmp1);
 		// calculating_instruc(strr);
 		sorting(strr);
-		tmp1 = strr->lista;
+		tmp1 = strr->listb;
 		// final_sorting(strr);
 		// tmp1 = strr->listb;
-		while (tmp1)
+		while (strr->lista)
 		{
-			printf("%d\n", tmp1->content);
-			tmp1 = tmp1->next;
+			printf("%d\n", strr->lista->content);
+			strr->lista = strr->lista->next;
 		}
 	}
 	else
