@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 23:59:35 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/11 00:09:21 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@ void	free_lista(t_list *list)
 	}
 }
 
+int	sorted(t_struct *strr)
+{
+	t_list	*tmp;
+
+	tmp = strr->lista;
+	while (strr->lista)
+	{
+		tmp = strr->lista->next;
+		if (!tmp)
+			break ;
+		if (tmp->content < strr->lista->content)
+			return (0);
+		strr->lista = strr->lista->next;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_struct	*strr;
@@ -35,6 +52,8 @@ int	main(int argc, char **argv)
 	{
 		check_error(argv);
 		fill_stack_a(strr, argv);
+		if (sorted(strr))
+			return (0);
 		move_to_stack_b(strr);
 		final_sorting(strr);
 		free_lista(strr->lista);
