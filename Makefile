@@ -6,11 +6,12 @@
 #    By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/14 16:41:34 by iouardi           #+#    #+#              #
-#    Updated: 2022/05/10 20:00:05 by iouardi          ###   ########.fr        #
+#    Updated: 2022/05/10 23:50:14 by iouardi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= 			push_swap
+NAME_BONUS= 	checker
 FLAGS=			-Wall -Werror -Wextra
 CC=				cc
 SRC_FILES=		mandatory/push_swap.c \
@@ -21,13 +22,16 @@ SRC_FILES=		mandatory/push_swap.c \
 				mandatory/instructions.c \
 				mandatory/sorting.c
 
-SRC_FILES_BONUS = bonus/push_swap_bonus.c \
+SRC_FILES_BONUS = bonus/checker.c \
 				bonus/calculate_min_instruc_bonus.c \
 				bonus/check_errors_bonus.c \
 				bonus/fill_stack_moy_big_small_bonus.c \
 				bonus/indexing_bonus.c \
 				bonus/instructions_bonus.c \
-				bonus/sorting_bonus.c
+				bonus/sorting_bonus.c \
+				bonus/instructions_errors_bonus.c \
+				src/gnl/get_next_line.c \
+				src/gnl/get_next_line_utils.c 
 
 OBJ_FILES=			$(SRC_FILES:.c=.o)
 OBJ_FILES_BONUS=	$(SRC_FILES_BONUS:.c=.o)
@@ -53,7 +57,7 @@ re: fclean all
 bonus: $(OBJ_FILES_BONUS)
 	@make -C src/libft
 	@cp src/libft/libft.a ./
-	$(CC) $(FLAGS) $(OBJ_FILES_BONUS) -o $(NAME) libft.a
+	$(CC) $(FLAGS) $(OBJ_FILES_BONUS) -o $(NAME_BONUS) libft.a
 
 .PHONY:
 	all clean fclean re bonus

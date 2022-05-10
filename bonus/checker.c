@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 19:26:55 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/11 00:01:18 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../mandatory/push_swap.h"
+
+int	sorted(t_struct *strr)
+{
+	t_list	*tmp;
+
+	tmp = strr->lista;
+	while (strr->lista)
+	{
+		tmp = strr->lista->next;
+		if (!tmp)
+			break ;
+		if (tmp->content < strr->lista->content)
+			return (0);
+		strr->lista = strr->lista->next;
+	}
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -21,10 +38,15 @@ int	main(int argc, char **argv)
 	strr->listb = NULL;
 	if (argc > 2)
 	{
-		check_error(argv, argc);
+		check_error(argv);
 		fill_stack_a(strr, argv);
-		move_to_stack_b(strr);
-		final_sorting(strr);
+		check_instructions_errors(strr);
+		if (!strr->listb && sorted(strr))
+		{
+			write(1, "OK\n", 3);
+			exit (0);
+		}
+		write(1, "KO\n", 3);
 	}
 	else
 	{

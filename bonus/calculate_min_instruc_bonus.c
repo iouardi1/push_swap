@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calculate_min_instruc.c                            :+:      :+:    :+:   */
+/*   calculate_min_instruc_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 19:23:56 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 19:29:21 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/10 21:34:36 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../mandatory/push_swap.h"
 
 t_list	*find_position_init(t_struct *strr, int *flagg, int *min)
 {

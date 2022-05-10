@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_stack_moy_big_small.c                         :+:      :+:    :+:   */
+/*   fill_stack_moy_big_small_bonus.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 19:18:58 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 19:32:45 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/10 21:35:20 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../mandatory/push_swap.h"
 
 void	fill_stack_a(t_struct *strr, char **argv)
 {

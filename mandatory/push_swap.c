@@ -6,11 +6,23 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 19:26:55 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/10 23:59:35 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	free_lista(t_list *list)
+{
+	t_list	*tmp;
+
+	while (list)
+	{
+		tmp = list->next;
+		free(list);
+		list = tmp;
+	}
+}
 
 int	main(int argc, char **argv)
 {
@@ -21,10 +33,12 @@ int	main(int argc, char **argv)
 	strr->listb = NULL;
 	if (argc > 2)
 	{
-		check_error(argv, argc);
+		check_error(argv);
 		fill_stack_a(strr, argv);
 		move_to_stack_b(strr);
 		final_sorting(strr);
+		free_lista(strr->lista);
+		free(strr);
 	}
 	else
 	{

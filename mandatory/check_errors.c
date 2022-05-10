@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 19:14:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 19:31:40 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/10 23:37:30 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,16 @@ int	num_duplicated(char **argv, int l)
 	return (1);
 }
 
-void	check_error(char **argv, int argc)
+void	check_error(char **argv)
 {
 	int		i;
-	int		j;
-	char	**arr;
 
-	i = 1;
-	j = 0;
-	arr = (char **)malloc(sizeof(char *) * argc);
-	while (argv[i])
-	{
-		arr[j] = ft_strdup(argv[i]);
-		i++;
-	}
-	arr[j] = NULL;
 	i = 1;
 	while (argv[i])
 	{
 		if (!int_range(argv[i]) || !num_duplicated(argv, i))
 		{
-			write (2, "errooor!\n", 8);
+			write (2, "Error!\n", 8);
 			exit (1);
 		}
 		i++;
