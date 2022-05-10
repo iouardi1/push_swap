@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   indexing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 19:26:55 by iouardi          ###   ########.fr       */
+/*   Created: 2022/05/10 19:22:13 by iouardi           #+#    #+#             */
+/*   Updated: 2022/05/10 19:33:42 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+int	indexing_stack(t_list *list)
 {
-	t_struct	*strr;
+	int		i;
+	int		size;
+	int		demi_size;
 
-	strr = malloc(sizeof(t_struct));
-	strr->lista = NULL;
-	strr->listb = NULL;
-	if (argc > 2)
-	{
-		check_error(argv, argc);
-		fill_stack_a(strr, argv);
-		move_to_stack_b(strr);
-		final_sorting(strr);
-	}
+	i = 0;
+	size = ft_lstsize(list);
+	if (size % 2 != 0)
+		demi_size = (size / 2) + 1;
 	else
+		demi_size = size / 2;
+	while (i < demi_size)
 	{
-		write(1, "Please insert more args\n", 25);
-		exit (-1);
+		list->flag = 0;
+		list->index = i++;
+		list = list->next;
 	}
-	return (0);
+	i = 0;
+	while (i < demi_size && list)
+	{
+		list->flag = 1;
+		list->index = i++;
+		list = list->next;
+	}
+	return (i - 1);
 }
