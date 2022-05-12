@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:55:43 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/11 00:01:18 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:45:12 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main(int argc, char **argv)
 	strr = malloc(sizeof(t_struct));
 	strr->lista = NULL;
 	strr->listb = NULL;
+	if (argc == 1)
+		exit (0);
 	if (argc > 2)
 	{
 		check_error(argv);
@@ -50,7 +52,7 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		write(1, "Please insert more args\n", 25);
+		write(2, "Error\n", 7);
 		exit (-1);
 	}
 	return (0);

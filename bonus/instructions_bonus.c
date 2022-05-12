@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 19:16:15 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 21:35:29 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/12 04:15:29 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	swap(t_list *list)
 {
 	int		tmp;
 
-	if (list == NULL || list->next == NULL)
-		return ;
 	if (ft_lstsize(list) <= 1)
 		return ;
 	tmp = list->content;

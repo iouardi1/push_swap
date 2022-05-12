@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 19:18:58 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 23:30:23 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/12 03:26:11 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,34 @@ void	calcul_moyenne(t_struct	*strr, t_list **lista)
 
 void	biggest_num(t_struct *strr, t_list **list)
 {
+	t_list	*tmp;
+
+	tmp = *list;
 	strr->beggy = strr->moyenne;
-	while ((*list))
+	while (tmp)
 	{
-		if ((*list)->content >= strr->beggy)
-			strr->beggy = (*list)->content;
-		*list = (*list)->next;
+		if (tmp->content >= strr->beggy)
+			strr->beggy = tmp->content;
+		tmp = tmp->next;
 	}
 }
 
 int	smallest_num(t_struct *strr, t_list **list)
 {
 	int		index;
+	t_list	*tmp;
 
 	strr->smally = strr->moyenne;
-	while ((*list))
+	tmp = *list;
+	while (tmp)
 	{
-		if ((*list)->content <= strr->smally)
+		if (tmp->content <= strr->smally)
 		{
-			strr->smally = (*list)->content;
-			index = (*list)->index;
-			strr->min_flag_a = (*list)->flag;
+			strr->smally = tmp->content;
+			index = tmp->index;
+			strr->min_flag_a = tmp->flag;
 		}
-		*list = (*list)->next;
+		tmp = tmp->next;
 	}
 	return (index);
 }

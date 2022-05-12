@@ -6,7 +6,7 @@
 #    By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/14 16:41:34 by iouardi           #+#    #+#              #
-#    Updated: 2022/05/10 23:50:14 by iouardi          ###   ########.fr        #
+#    Updated: 2022/05/12 04:12:04 by iouardi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC_FILES=		mandatory/push_swap.c \
 				mandatory/fill_stack_moy_big_small.c \
 				mandatory/indexing.c \
 				mandatory/instructions.c \
-				mandatory/sorting.c
+				mandatory/sorting.c \
+				mandatory/sorting_five_or_less.c
 
 SRC_FILES_BONUS = bonus/checker.c \
 				bonus/calculate_min_instruc_bonus.c \
@@ -43,7 +44,7 @@ $(NAME): $(OBJ_FILES)
 	@cp src/libft/libft.a ./
 	$(CC) $(OBJ_FILES) -o $(NAME) libft.a
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@ -g
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	find . -name "*.o" -delete

@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:19:54 by iouardi           #+#    #+#             */
-/*   Updated: 2021/11/17 23:54:50 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/12 04:25:55 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,3 @@ void	*ft_memset(void *b, int c, size_t len)
 	}
 	return (b);
 }
-
-// int	main()
-// {
-// 	char str[] = "khamiss";
-// 	printf("%s\n", ft_memset(str, 'h', 3));
-// }

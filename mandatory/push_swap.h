@@ -6,7 +6,7 @@
 /*   By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 22:26:14 by iouardi           #+#    #+#             */
-/*   Updated: 2022/05/10 23:52:21 by iouardi          ###   ########.fr       */
+/*   Updated: 2022/05/12 04:18:33 by iouardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ int		find_position(t_struct *strr, int element);
 void	check_line(t_struct *strr, char *line);
 void	check_instructions_errors(t_struct *strr);
 int		check_line_supp(t_struct *strr, char *line);
+void	sort_five(t_struct *strr);
+void	sort_two(t_struct *strr);
 
 #endif
