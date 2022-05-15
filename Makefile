@@ -6,7 +6,7 @@
 #    By: iouardi <iouardi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/14 16:41:34 by iouardi           #+#    #+#              #
-#    Updated: 2022/05/12 04:12:04 by iouardi          ###   ########.fr        #
+#    Updated: 2022/05/16 00:21:02 by iouardi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,10 @@ SRC_FILES=		mandatory/push_swap.c \
 				mandatory/sorting_five_or_less.c
 
 SRC_FILES_BONUS = bonus/checker.c \
-				bonus/calculate_min_instruc_bonus.c \
 				bonus/check_errors_bonus.c \
 				bonus/fill_stack_moy_big_small_bonus.c \
 				bonus/indexing_bonus.c \
 				bonus/instructions_bonus.c \
-				bonus/sorting_bonus.c \
 				bonus/instructions_errors_bonus.c \
 				src/gnl/get_next_line.c \
 				src/gnl/get_next_line_utils.c 
